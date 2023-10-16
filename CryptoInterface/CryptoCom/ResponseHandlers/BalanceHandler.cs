@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OWT.CryptoCom.Dto;
 
-namespace OWT.CryptoCom.ResponseHandlers;
+namespace CryptoInterface.CryptoCom.ResponseHandlers;
 
 public class BalanceHandler : ICryptoComDtoExecutor
 {

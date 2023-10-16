@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace OWT.CryptoCom;
+namespace CryptoInterface.CryptoCom;
 
 public interface ICryptoComDtoExecutor
 {

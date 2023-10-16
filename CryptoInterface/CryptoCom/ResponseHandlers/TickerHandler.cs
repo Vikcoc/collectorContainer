@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace OWT.CryptoCom.ResponseHandlers;
+namespace CryptoInterface.CryptoCom.ResponseHandlers;
 
 public class TickerHandler : ICryptoComDtoExecutor
 {

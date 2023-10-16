@@ -6,17 +6,17 @@ using System.Data;
 
 namespace CryptoInterface.CryptoCom.ResponseHandlers;
 
-public class TickerSaveHandler2 : ICryptoComDtoExecutor
+public class TickerSaveHandlerPostgre : ICryptoComDtoExecutor
 {
     private readonly IDbConnection _connection;
-    private readonly ILogger<TickerSaveHandler2> _logger;
+    private readonly ILogger<TickerSaveHandlerPostgre> _logger;
 
 
 
-    private const string SelectQuery = "SELECT TOP (1) [Actual] AS Value FROM [NewMarketSnaps] WHERE [Instrument] = @Instrument ORDER BY [Timestamp] DESC";
-    private const string InsertQuery = "INSERT INTO [NewMarketSnaps] ([High], [Low], [Actual], [Instrument], [Volume], [UsdVolume], [OpenInterest], [Change], [BestBid],[BestBidSize],[BestAsk],[BestAskSize],[TradeTimestamp],[Timestamp]) VALUES (@High, @Low, @Actual, @Instrument, @Volume, @UsdVolume,@OpenInterest,@Change,@BestBid,@BestBidSize,@BestAsk,@BestAskSize,@TradeTimestamp,@Timestamp)";
+    private const string SelectQuery = "SELECT \"Actual\" AS Value FROM NewMarketSnaps WHERE \"Instrument\" = 'ETH_USDT' AND \"Timestamp\" = (SELECT max(\"Timestamp\") FROM NewMarketSnaps)";
+    private const string InsertQuery = "INSERT INTO NewMarketSnaps (\"High\", \"Low\", \"Actual\", \"Instrument\", \"Volume\", \"UsdVolume\", \"OpenInterest\", \"Change\", \"BestBid\", \"BestBidSize\", \"BestAsk\", \"BestAskSize\", \"TradeTimestamp\", \"Timestamp\") VALUES (@High, @Low, @Actual, @Instrument, @Volume, @UsdVolume,@OpenInterest,@Change,@BestBid,@BestBidSize,@BestAsk,@BestAskSize,@TradeTimestamp,@Timestamp)";
 
-    public TickerSaveHandler2(IDbConnection connection, ILogger<TickerSaveHandler2> logger)
+    public TickerSaveHandlerPostgre(IDbConnection connection, ILogger<TickerSaveHandlerPostgre> logger)
     {
         _connection = connection;
         _logger = logger;
@@ -56,7 +56,7 @@ public class TickerSaveHandler2 : ICryptoComDtoExecutor
                 Timestamp = time
             });
 
-            _logger.LogInformation("Inserted {0} for instrument {1} at timestamp {2}", item.Actual, item.Instrument, time);
+            // _logger.LogInformation("Inserted {0} for instrument {1} at timestamp {2}", item.Actual, item.Instrument, time);
 
         }
 

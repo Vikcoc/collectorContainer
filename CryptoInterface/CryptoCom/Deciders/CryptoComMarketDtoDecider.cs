@@ -1,4 +1,4 @@
-﻿namespace OWT.CryptoCom.Deciders;
+﻿namespace CryptoInterface.CryptoCom.Deciders;
 
 public class CryptoComMarketDtoDecider : CryptoComDtoDecider
 {

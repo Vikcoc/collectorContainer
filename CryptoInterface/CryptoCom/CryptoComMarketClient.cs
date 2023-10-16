@@ -1,6 +1,6 @@
 ﻿using OWT.SocketClient;
 
-namespace OWT.CryptoCom;
+namespace CryptoInterface.CryptoCom;
 
 public class CryptoComMarketClient
 {

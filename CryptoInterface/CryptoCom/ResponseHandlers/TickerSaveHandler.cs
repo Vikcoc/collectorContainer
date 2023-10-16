@@ -3,7 +3,7 @@ using Dapper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
-namespace OWT.CryptoCom.ResponseHandlers;
+namespace CryptoInterface.CryptoCom.ResponseHandlers;
 
 public class TickerSaveHandler : ICryptoComDtoExecutor
 {

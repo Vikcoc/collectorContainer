@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using OWT.CryptoCom.Dto;
 using OWT.SocketClient;
 
-namespace OWT.CryptoCom;
+namespace CryptoInterface.CryptoCom;
 
 public class CryptoComUserClient : CryptoComMarketClient
 {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace OWT.CryptoCom.Deciders;
+namespace CryptoInterface.CryptoCom.Deciders;
 
 public class CryptoComDtoDecider
 {
