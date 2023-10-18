@@ -16,6 +16,8 @@ public class TickerSaveHandlerPostgre : ICryptoComDtoExecutor
     private const string SelectQuery = "SELECT \"Actual\" AS Value FROM NewMarketSnaps WHERE \"Instrument\" = 'ETH_USDT' AND \"Timestamp\" = (SELECT max(\"Timestamp\") FROM NewMarketSnaps)";
     private const string InsertQuery = "INSERT INTO NewMarketSnaps (\"High\", \"Low\", \"Actual\", \"Instrument\", \"Volume\", \"UsdVolume\", \"OpenInterest\", \"Change\", \"BestBid\", \"BestBidSize\", \"BestAsk\", \"BestAskSize\", \"TradeTimestamp\", \"Timestamp\") VALUES (@High, @Low, @Actual, @Instrument, @Volume, @UsdVolume,@OpenInterest,@Change,@BestBid,@BestBidSize,@BestAsk,@BestAskSize,@TradeTimestamp,@Timestamp)";
 
+    private decimal prev;
+
     public TickerSaveHandlerPostgre(IDbConnection connection, ILogger<TickerSaveHandlerPostgre> logger)
     {
         _connection = connection;
@@ -34,8 +36,13 @@ public class TickerSaveHandlerPostgre : ICryptoComDtoExecutor
         }
         foreach (var item in data)
         {
-            if (item.Actual == await _connection.QueryFirstOrDefaultAsync<decimal?>(SelectQuery, new { item.Instrument }))
+            if (item.Actual == prev)
                 continue;
+            
+            prev = item.Actual;
+
+            // if (item.Actual == await _connection.QueryFirstOrDefaultAsync<decimal?>(SelectQuery, new { item.Instrument }))
+            //     continue;
             var time = DateTime.UtcNow;
 
             await _connection.ExecuteAsync(InsertQuery, new

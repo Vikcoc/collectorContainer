@@ -45,8 +45,7 @@ public class CryptoComSimpleCollector : Microsoft.Extensions.Hosting.BackgroundS
             }
 
             if (_savePostgre.CanExecute(jobj))
-                _savePostgre.Execute(jobj, _marketClient, stoppingToken)
-                    .ContinueWith(t => Trace.WriteLine(t.Exception),TaskContinuationOptions.NotOnRanToCompletion); 
+                await _savePostgre.Execute(jobj, _marketClient, stoppingToken); 
         }
     }
 
