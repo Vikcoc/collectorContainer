@@ -355,3 +355,4 @@ MigrationBackup/
 # Others
 app
 eth_collector.tar
+TheCollector/config.json
