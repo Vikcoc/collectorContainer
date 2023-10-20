@@ -6,6 +6,7 @@ using CryptoInterface.CryptoCom.ResponseHandlers;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Linq;
 using Npgsql;
 using OWT.SocketClient;
 
@@ -25,6 +26,7 @@ builder.Services.AddTransient<CryptoComMarketClient>();
 
 builder.Services.AddScoped<HeartbeatHandler>();
 builder.Services.AddScoped<TickerSaveHandlerPostgre>();
+builder.Services.AddSingleton<Queue<JObject>>();
 
 builder.Services.AddHostedService<CryptoComSimpleCollector>();
 

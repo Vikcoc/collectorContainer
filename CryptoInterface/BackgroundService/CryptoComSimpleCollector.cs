@@ -23,7 +23,7 @@ public class CryptoComSimpleCollector : Microsoft.Extensions.Hosting.BackgroundS
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await _marketClient.Connect(stoppingToken);
-        Console.WriteLine("Connected");
+        Console.WriteLine("Connected " + DateTime.UtcNow.ToString());
         var trans = new CryptoComParamTransaction
         {
             Method = "subscribe",
@@ -45,7 +45,7 @@ public class CryptoComSimpleCollector : Microsoft.Extensions.Hosting.BackgroundS
             }
 
             if (_savePostgre.CanExecute(jobj))
-                await _savePostgre.Execute(jobj, _marketClient, stoppingToken); 
+                _savePostgre.Execute(jobj, _marketClient, stoppingToken).ContinueWith(t => Trace.WriteLine(t.Exception),TaskContinuationOptions.NotOnRanToCompletion); 
         }
     }
 
