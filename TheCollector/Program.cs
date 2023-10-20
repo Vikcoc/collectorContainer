@@ -3,11 +3,13 @@ using System.Net.WebSockets;
 using CryptoInterface.BackgroundService;
 using CryptoInterface.CryptoCom;
 using CryptoInterface.CryptoCom.ResponseHandlers;
+using CryptoInterface.Saver;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
 using Npgsql;
+using OWT.CryptoCom.Dto;
 using OWT.SocketClient;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
@@ -26,9 +28,11 @@ builder.Services.AddTransient<CryptoComMarketClient>();
 
 builder.Services.AddScoped<HeartbeatHandler>();
 builder.Services.AddScoped<TickerSaveHandlerPostgre>();
-builder.Services.AddSingleton<Queue<JObject>>();
+builder.Services.AddScoped<BulkInsertPostgre>();
+builder.Services.AddSingleton<Queue<(CryptoComTickerData, DateTime)>>();
 
 builder.Services.AddHostedService<CryptoComSimpleCollector>();
+builder.Services.AddHostedService<CryptoComSaverService>();
 
 
 using IHost host = builder.Build();
