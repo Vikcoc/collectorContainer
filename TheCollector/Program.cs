@@ -4,6 +4,7 @@ using CryptoInterface.BackgroundService;
 using CryptoInterface.CryptoCom;
 using CryptoInterface.CryptoCom.ResponseHandlers;
 using CryptoInterface.Saver;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,9 +19,10 @@ builder.Configuration.Sources.Add(new JsonConfigurationSource(){
     Path = "config.json"
 });
 
-var connectionString = builder.Configuration["connectionString"];
-builder.Services.AddScoped<IDbConnection>(db =>
-    new NpgsqlConnection(connectionString));
+builder.Services.AddScoped<IDbConnection>(db => {
+    var theConnection = db.GetRequiredService<IConfiguration>()["connectionString"];
+    return new NpgsqlConnection(theConnection);
+    });
 
 builder.Services.AddTransient<ClientWebSocket>();
 builder.Services.AddTransient<ISocketClient, SocketClient>();
