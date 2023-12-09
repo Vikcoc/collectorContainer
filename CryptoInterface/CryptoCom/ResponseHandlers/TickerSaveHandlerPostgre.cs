@@ -10,11 +10,11 @@ public class TickerSaveHandlerPostgre : ICryptoComDtoExecutor
 {
     private readonly ILogger<TickerSaveHandlerPostgre> _logger;
 
-    private readonly Queue<(CryptoComTickerData, DateTime)> _messageQueue;
+    private readonly Queue<CryptoComTickerData> _messageQueue;
 
     private decimal prev;
 
-    public TickerSaveHandlerPostgre(ILogger<TickerSaveHandlerPostgre> logger, Queue<(CryptoComTickerData, DateTime)> messageQueue)
+    public TickerSaveHandlerPostgre(ILogger<TickerSaveHandlerPostgre> logger, Queue<CryptoComTickerData> messageQueue)
     {
         _logger = logger;
         _messageQueue = messageQueue;
@@ -36,7 +36,7 @@ public class TickerSaveHandlerPostgre : ICryptoComDtoExecutor
                 continue;
             
             prev = item.Actual;
-            _messageQueue.Enqueue((item, DateTime.UtcNow));
+            _messageQueue.Enqueue(item);
         }
         return Task.CompletedTask;
     }

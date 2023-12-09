@@ -11,10 +11,10 @@ namespace CryptoInterface.BackgroundService;
 
 public class CryptoComSaverService : Microsoft.Extensions.Hosting.BackgroundService
 {
-    private readonly Queue<(CryptoComTickerData, DateTime)> _messageQueue;
-    private readonly BulkInsertPostgre _savePostgre;
+    private readonly Queue<CryptoComTickerData> _messageQueue;
+    private readonly BulkInsertPostgreQuick _savePostgre;
 
-    public CryptoComSaverService(Queue<(CryptoComTickerData, DateTime)> messageQueue, BulkInsertPostgre savePostgre)
+    public CryptoComSaverService(Queue<CryptoComTickerData> messageQueue, BulkInsertPostgreQuick savePostgre)
     {
         _messageQueue = messageQueue;
         _savePostgre = savePostgre;

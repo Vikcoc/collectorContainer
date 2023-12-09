@@ -29,8 +29,8 @@ builder.Services.AddTransient<CryptoComMarketClient>();
 
 builder.Services.AddScoped<HeartbeatHandler>();
 builder.Services.AddScoped<TickerSaveHandlerPostgre>();
-builder.Services.AddScoped<BulkInsertPostgre>();
-builder.Services.AddSingleton<Queue<(CryptoComTickerData, DateTime)>>();
+builder.Services.AddScoped<BulkInsertPostgreQuick>();
+builder.Services.AddSingleton<Queue<CryptoComTickerData>>();
 
 builder.Services.AddHostedService<CryptoComSimpleCollector>();
 builder.Services.AddHostedService<CryptoComSaverService>();
